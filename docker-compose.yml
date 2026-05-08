@@ -1,0 +1,12 @@
+services:
+  beebo-api:
+    container_name: beebo-api
+    env_file: ./.env
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "${HYPER_API_PORT}:${HYPER_API_PORT}"
+    restart: unless-stopped
+
+
