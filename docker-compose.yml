@@ -1,12 +1,25 @@
 services:
   beebo-api:
+    # user: "${USER_PID}:${USER_GID}"
+    network_mode: host
     container_name: beebo-api
-    env_file: ./.env
+    env_file: ./beebo_api/.env 
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./beebo_api/Dockerfile
     ports:
-      - "${HYPER_API_PORT}:${HYPER_API_PORT}"
+      - "${AXUM_API_PORT}:${AXUM_API_PORT}"
     restart: unless-stopped
-
+    volumes:
+      - ${USER_PROJECT_PATH}/beebo_api/beebo_notes/notes.txt:/app/beebo_notes/beebo_api/beebo_notes/notes.txt
+      - ${HOME}/.ssh/beebo/id_25519:/root/.ssh/beebo/id_25519:ro
+    tty: true
+    stdin_open: true
+  #
+  # beebo_cron:
+  #   container_name: beebo-cron
+  #   build:
+  #     context: .
+  #     dockerfile: ./beebo_cron_worker/Dockerfile
+  #
 

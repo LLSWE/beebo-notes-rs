@@ -1,0 +1,8 @@
+[package]
+name = "beebo_cron_worker"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+apalis-cron = "0.7.4"
+tonic = "0.14.6"

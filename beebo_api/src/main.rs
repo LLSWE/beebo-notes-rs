@@ -6,6 +6,7 @@ use crate::model::{AppState, FsPath, LlamaModel};
 use crate::{infra::run_server, model::HttpServer};
 
 mod ai;
+mod error;
 mod handler;
 mod infra;
 mod model;
