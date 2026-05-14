@@ -23,6 +23,10 @@ RUN apt update && apt install -y \
 RUN mkdir -p /root/.ssh && \
     ssh-keyscan github.com >> /root/.ssh/known_hosts
 
+RUN git config --global --add safe.directory /api \
+      && git config --global user.email "tiilas777@gmail.com"\
+        && git config --global user.name "LLSWE" 
+
 WORKDIR /api
 COPY --from=builder /api/target/release/beebo-notes-rs /usr/local/bin
 ENTRYPOINT ["/usr/local/bin/beebo-notes-rs"]

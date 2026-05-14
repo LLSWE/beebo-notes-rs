@@ -7,11 +7,15 @@ services:
     build:
       context: .
       dockerfile: ./beebo_api/Dockerfile
-    ports:
-      - "${AXUM_API_PORT}:${AXUM_API_PORT}"
+      args:
+          GIT_USER: ${GIT_USER}
+          GIT_EMAIL: ${GIT_EMAIL}
+    # ports:
+    #   - "${AXUM_API_PORT}:${AXUM_API_PORT}"
     restart: unless-stopped
     volumes:
-      - ${USER_PROJECT_PATH}/beebo_api/beebo_notes/notes.txt:/app/beebo_notes/beebo_api/beebo_notes/notes.txt
+      - ${USER_PROJECT_PATH}/:/api
+      # - ${USER_PROJECT_PATH}/beebo_api/beebo_notes:/api/beebo_notes
       - ${HOME}/.ssh/beebo/id_25519:/root/.ssh/beebo/id_25519:ro
     tty: true
     stdin_open: true

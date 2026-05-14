@@ -1,6 +1,6 @@
-.git
+# .git
 .env
 target
-**/.git
+# **/.git
 **/.env
 **/target
