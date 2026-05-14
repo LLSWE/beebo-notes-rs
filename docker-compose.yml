@@ -16,7 +16,7 @@ services:
     volumes:
       - ${USER_PROJECT_PATH}/:/api
       # - ${USER_PROJECT_PATH}/beebo_api/beebo_notes:/api/beebo_notes
-      - ${HOME}/.ssh/beebo/id_25519:/root/.ssh/beebo/id_25519:ro
+      - ${HOME}/.ssh/beebo/id_ed25519:/root/.ssh/beebo/id_ed25519:ro
     tty: true
     stdin_open: true
   #
