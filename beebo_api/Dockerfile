@@ -23,17 +23,30 @@ RUN apt update && apt install -y \
     git \
     openssh-client
 
-RUN mkdir -p /root/.ssh && \
-    ssh-keyscan github.com >> /root/.ssh/known_hosts
+RUN adduser --uid 1000 --disabled-password beebo
 
-RUN git config --global --add safe.directory /api \
-      && git config --global user.email "$GIT_EMAIL"\
-        && git config --global user.name "$GIT_USER"
+RUN mkdir -p /home/beebo/.ssh
+
+RUN ssh-keyscan github.com >> /home/beebo/.ssh/known_hosts
 
 RUN echo "Host github.com\n\
-  IdentityFile /root/.ssh/beebo/id_ed25519\n\
-  IdentitiesOnly yes" > /root/.ssh/config
+  IdentityFile /home/beebo/.ssh/beebo/id_ed25519\n\
+  IdentitiesOnly yes" > /home/beebo/.ssh/config
+
+RUN chown -R beebo:beebo /home/beebo/.ssh
 
 WORKDIR /api
-COPY --from=builder /api/target/release/beebo-notes-rs /usr/local/bin
+
+COPY --from=builder /api/target/release/beebo-notes-rs /usr/local/bin/beebo-notes-rs
+
+RUN chmod +x /usr/local/bin/beebo-notes-rs
+
+USER beebo
+
+RUN git config --global --add safe.directory /api \
+    && git config --global user.email "$GIT_EMAIL" \
+    && git config --global user.name "$GIT_USER"
+
+
+
 ENTRYPOINT ["/usr/local/bin/beebo-notes-rs"]
