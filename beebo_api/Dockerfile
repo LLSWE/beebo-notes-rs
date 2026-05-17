@@ -1,4 +1,8 @@
 FROM lukemathwalker/cargo-chef:latest-rust-1 AS chef
+
+RUN apt update && apt install -y\
+    protobuf-compiler 
+
 WORKDIR /api
 
 FROM chef AS planner
@@ -11,7 +15,7 @@ COPY --from=planner /api/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
 
 COPY ./beebo_api/ .
-RUN cargo build --release --bin beebo-notes-rs
+RUN cargo build --release --bin beebo_api
 
 FROM debian:trixie-slim AS runtime
 
@@ -37,9 +41,9 @@ RUN chown -R beebo:beebo /home/beebo/.ssh
 
 WORKDIR /api
 
-COPY --from=builder /api/target/release/beebo-notes-rs /usr/local/bin/beebo-notes-rs
+COPY --from=builder /api/target/release/beebo_api /usr/local/bin/beebo_api
 
-RUN chmod +x /usr/local/bin/beebo-notes-rs
+RUN chmod +x /usr/local/bin/beebo_api
 
 USER beebo
 
@@ -49,4 +53,4 @@ RUN git config --global --add safe.directory /api \
 
 
 
-ENTRYPOINT ["/usr/local/bin/beebo-notes-rs"]
+ENTRYPOINT ["/usr/local/bin/beebo_api"]

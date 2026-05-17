@@ -2,11 +2,12 @@ use std::sync::Arc;
 
 use reqwest::Client;
 
+use crate::grpc::grpc_server;
 use crate::model::{AppState, FsPath, LlamaModel};
 use crate::{infra::run_server, model::HttpServer};
 
 mod ai;
-mod error;
+mod grpc;
 mod handler;
 mod infra;
 mod model;
@@ -20,11 +21,14 @@ async fn main() {
 
     let http_client = Client::new();
 
-    let state = AppState {
+    let state = Arc::new(AppState {
         llama: llama_config,
         client: http_client,
         fs: system_config,
-    };
+    });
 
-    run_server(axum_config, state).await;
+    tokio::join!(
+        run_server(axum_config, state.clone(),),
+        grpc_server(state.clone(),)
+    );
 }

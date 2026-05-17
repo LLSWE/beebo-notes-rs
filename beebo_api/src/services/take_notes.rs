@@ -1,7 +1,5 @@
 use tokio::{fs::OpenOptions, io::AsyncWriteExt};
 
-use reqwest::StatusCode;
-
 pub async fn write_beebo_notes(
     note_path: &String,
     note_paragraph: String,

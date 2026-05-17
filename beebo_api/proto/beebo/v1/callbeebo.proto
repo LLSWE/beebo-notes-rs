@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package beebo.v1;
+
+service CallBeebo {
+  rpc WriteBeebo(WriteBeeboRequest) returns (WriteBeeboResponse);
+}
+
+message WriteBeeboRequest {}
+
+message WriteBeeboResponse { string message = 1; }

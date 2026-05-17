@@ -1,4 +1,4 @@
-use reqwest::{Client, Error, Response};
+use reqwest::{Client, Error};
 
 use crate::{ai::question, model::LlamaResponse};
 

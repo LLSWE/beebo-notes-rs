@@ -1,6 +1,6 @@
 use tokio::process::Command;
 
-use reqwest::{Error, StatusCode};
+use reqwest::StatusCode;
 
 pub async fn send_git(notes_path: &str) -> Result<String, StatusCode> {
     if let Err(e) = git_beebos_notes(&notes_path).await {
