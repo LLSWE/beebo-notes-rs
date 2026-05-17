@@ -19,11 +19,12 @@ services:
       - ${HOME}/.ssh/beebo/id_ed25519:/home/beebo/.ssh/beebo/id_ed25519:ro
     tty: true
     stdin_open: true
-  #
-  # beebo_cron:
-  #   container_name: beebo-cron
-  #   build:
-  #     context: .
-  #     dockerfile: ./beebo_cron_worker/Dockerfile
-  #
+
+  beebo_cron:
+    container_name: beebo-cron
+    network_mode: host
+    build:
+      context: .
+      dockerfile: ./beebo_cron_worker/Dockerfile
+
 

@@ -1,0 +1,3 @@
+[workspace]
+resolver = "3"
+members = ["beebo_api", "beebo_cron_worker"]
