@@ -29,7 +29,7 @@ RUN apt update && apt install -y \
 
 RUN adduser --uid 1000 --disabled-password beebo
 
-RUN mkdir -p /home/beebo/.ssh
+RUN mkdir -p /home/beebo/.ssh/beebo
 
 RUN ssh-keyscan github.com >> /home/beebo/.ssh/known_hosts
 
